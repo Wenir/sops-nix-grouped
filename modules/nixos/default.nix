@@ -24,10 +24,14 @@ in {
               final = lib.mkOption {
                 type = lib.types.attrs;
               };
+              placeholder = lib.mkOption {
+                type = lib.types.str;
+              };
             };
             freeformType = lib.types.attrsOf lib.types.unspecified;
             config = {
               final = top.sops.secrets."${config.name}";
+              placeholder = top.sops.placeholder."${config.name}";
             };
           }));
         };
@@ -46,7 +50,7 @@ in {
         _result = lib.mapAttrs' 
           (name: value: let
             filtered = lib.attrsets.filterAttrs 
-              (name: submodule: ! ((lib.hasPrefix "_" name) || name == "final"))
+              (name: submodule: ! ((lib.hasPrefix "_" name) || name == "final" || name == "placeholder"))
               value;
           in {
             name = filtered.name;

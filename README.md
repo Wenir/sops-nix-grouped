@@ -42,3 +42,17 @@ A small NixOS module that lets you group related sops-nix secrets under a named 
 ```
 
 Note: `[...].x.final` option exposes final values defined in `config.sops.secrets.x.`
+
+## Placeholder
+
+Placeholder for the secret can be accessed via `.placeholder`
+
+```nix
+
+config.sops-grouped.namespace1.secrets.private-key.placeholder
+
+# is equivalent to 
+
+config.sops.placeholder."namespace1--private-key"
+
+```
